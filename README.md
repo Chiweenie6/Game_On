@@ -1,5 +1,5 @@
 # Game_On
-A MERN application that allows users to browse video games as well as leave reviews.
+An application that allows users to browse video games as well as leave reviews. Built using a MERN stack.
 
 
 [![MIT License](https://img.shields.io/badge/License-MIT-blue)]((https://opensource.org/licenses/MIT))
