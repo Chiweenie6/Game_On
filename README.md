@@ -1,8 +1,6 @@
 # Game_On
 A MERN application that allows users to browse video games as well as leave reviews.
 
-# Find_A_Book
-A book API search engine built with MERN stack.
 
 [![MIT License](https://img.shields.io/badge/License-MIT-blue)]((https://opensource.org/licenses/MIT))
 
