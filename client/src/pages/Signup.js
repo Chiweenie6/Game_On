@@ -61,7 +61,19 @@ const Signup = () => {
   return (
     <>
       {/* This is needed for the validation functionality above */}
-      <Space noValidate validated={validated} onSubmit={handleFormSubmit}>
+
+      <Form
+        noValidate
+        validated={validated}
+        onSubmit={handleFormSubmit}
+        name="basic"
+        labelCol={{ span: 8 }}
+        wrapperCol={{ span: 16 }}
+        style={{ maxWidth: 600 }}
+        initialValues={{ remember: true }}
+        onFinish={handleFormSubmit}
+        autoComplete="off"
+      >
         {/* show alert if server response is bad */}
         <Alert
           dismissible
@@ -72,70 +84,47 @@ const Signup = () => {
           🚫 Something went wrong with your signup! 🚫
         </Alert>
 
-        <Form
-          name="basic"
-          labelCol={{ span: 8 }}
-          wrapperCol={{ span: 16 }}
-          style={{ maxWidth: 600 }}
-          initialValues={{ remember: true }}
-          onFinish={handleInputChange}
-          autoComplete="off"
+        <Form.Item
+          type="text"
+          name="username"
+          onChange={handleInputChange}
+          value={userFormData.username}
+          label="Username"
+          rules={[{ required: true, message: "🚫 Username is required!" }]}
         >
-          <Form.Item
-            type="text"
-            placeholder="Your username"
-            name="username"
-            onChange={handleInputChange}
-            value={userFormData.username}
-            label="Username"
-            rules={[{ required: true, message: "🚫 Username is required!" }]}
-          >
-            <Input />
-          </Form.Item>
+          <Input placeholder="Your username" />
+        </Form.Item>
 
-          <Form.Item
-            type="email"
-            placeholder="Your email address"
-            name="email"
-            onChange={handleInputChange}
-            value={userFormData.email}
-            required
-            label="Email"
-            rules={[{ required: true, message: "🚫 Email is required!" }]}
-          >
-            <Input />
-          </Form.Item>
+        <Form.Item
+          type="email"
+          name="email"
+          onChange={handleInputChange}
+          value={userFormData.email}
+          required
+          label="Email"
+          rules={[{ required: true, message: "🚫 Email is required!" }]}
+        >
+          <Input placeholder="Your email address" />
+        </Form.Item>
 
-          <Form.Item
-            type="password"
-            placeholder="Your password"
-            name="password"
-            onChange={handleInputChange}
-            value={userFormData.password}
-            required
-            label="Password"
-            rules={[{ required: true, message: "🚫 Password is required!" }]}
-          >
-            <Input />
-          </Form.Item>
+        <Form.Item
+          type="password"
+          name="password"
+          onChange={handleInputChange}
+          value={userFormData.password}
+          required
+          label="Password"
+          rules={[{ required: true, message: "🚫 Password is required!" }]}
+        >
+          <Input.Password placeholder="Your password" />
+        </Form.Item>
 
-          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <Button
-              htmlType="submit"
-              type="primary"
-              disabled={
-                !(
-                  userFormData.username &&
-                  userFormData.email &&
-                  userFormData.password
-                )
-              }
-            >
-              Submit
-            </Button>
-          </Form.Item>
-        </Form>
-      </Space>
+        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+          <Button htmlType="submit" type="primary">
+            Submit
+          </Button>
+        </Form.Item>
+      </Form>
     </>
   );
 };
