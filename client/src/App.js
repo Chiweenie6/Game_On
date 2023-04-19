@@ -13,10 +13,15 @@ import "antd/dist/reset.css";
 import "./App.css";
 import { ConfigProvider, theme } from "antd";
 
+import LoginForm from "./pages/LoginForm";
+
+
+
+
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import Signup from "./pages/Signup";
-import Login from "./pages/Login";
+
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 
@@ -57,7 +62,7 @@ function App() {
             <div className="container">
               <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/login" element={<Login />} />
+                <Route path="/login" element={<LoginForm />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/me" element={<Profile />} />
                 <Route path="/profiles/:profileId" element={<Profile />} />
