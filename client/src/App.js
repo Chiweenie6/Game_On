@@ -51,14 +51,14 @@ function App() {
   return (
     <ConfigProvider
       theme={{
-        algorithm: theme.darkAlgorithm,
+        algorithm: theme.lightAlgorithm,
       }}
     >
       <ApolloProvider client={client}>
         <Router>
           <Layout>
           <div className="flex-column justify-flex-start min-100-vh">
-            <Foot />
+            <Head />
             <div className="container">
               <Routes>
                 <Route path="/" element={<Home />} />

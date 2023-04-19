@@ -63,7 +63,7 @@ const Login = (props) => {
         </Alert>
         <Form.Item>
           <Form.Label htmlFor="email">Email</Form.Label>
-          <Form.Control
+          <Form.Item
             type="text"
             placeholder="Your email"
             name="email"
@@ -71,14 +71,14 @@ const Login = (props) => {
             value={userFormData.email}
             required
           />
-          <Form.Control.Feedback type="invalid">
+          <Form type="invalid">
             🚫 Email is required!
-          </Form.Control.Feedback>
+          </Form>
         </Form.Item>
 
         <Form.Item>
           <Form.Label htmlFor="password">Password</Form.Label>
-          <Form.Control
+          <Form.Item
             type="password"
             placeholder="Your password"
             name="password"
@@ -86,9 +86,9 @@ const Login = (props) => {
             value={userFormData.password}
             required
           />
-          <Form.Control.Feedback type="invalid">
+          <Form.Item type="invalid">
           🚫 Password is required!
-          </Form.Control.Feedback>
+          </Form.Item>
         </Form.Item>
         <Button
           disabled={!(userFormData.email && userFormData.password)}

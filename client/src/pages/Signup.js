@@ -5,9 +5,10 @@ import { useMutation } from "@apollo/client";
 import { ADD_USER } from "../utils/mutations";
 
 // import Ant Design
-import { Form, Button, Alert } from "antd";
+import { Form, Button, Alert, Input, Space } from "antd";
 
 import Auth from "../utils/auth";
+import FormItem from "antd/es/form/FormItem";
 
 const Signup = () => {
   const [userFormData, setUserFormData] = useState({
@@ -60,7 +61,7 @@ const Signup = () => {
   return (
     <>
       {/* This is needed for the validation functionality above */}
-      <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
+      <Space noValidate validated={validated} onSubmit={handleFormSubmit}>
         {/* show alert if server response is bad */}
         <Alert
           dismissible
@@ -71,67 +72,70 @@ const Signup = () => {
           🚫 Something went wrong with your signup! 🚫
         </Alert>
 
-        <Form.Item>
-          <Form.Label htmlFor="username">Username</Form.Label>
-          <Form.Control
+        <Form
+          name="basic"
+          labelCol={{ span: 8 }}
+          wrapperCol={{ span: 16 }}
+          style={{ maxWidth: 600 }}
+          initialValues={{ remember: true }}
+          onFinish={handleInputChange}
+          autoComplete="off"
+        >
+          <Form.Item
             type="text"
             placeholder="Your username"
             name="username"
             onChange={handleInputChange}
             value={userFormData.username}
-            required
-          />
-          <Form.Control.Feedback type="invalid">
-            🚫 Username is required!
-          </Form.Control.Feedback>
-        </Form.Item>
+            label="Username"
+            rules={[{ required: true, message: "🚫 Username is required!" }]}
+          >
+            <Input />
+          </Form.Item>
 
-        <Form.Item>
-          <Form.Label htmlFor="email">Email</Form.Label>
-          <Form.Control
+          <Form.Item
             type="email"
             placeholder="Your email address"
             name="email"
             onChange={handleInputChange}
             value={userFormData.email}
             required
-          />
-          <Form.Control.Feedback type="invalid">
-            🚫 Email is required!
-          </Form.Control.Feedback>
-        </Form.Item>
+            label="Email"
+            rules={[{ required: true, message: "🚫 Email is required!" }]}
+          >
+            <Input />
+          </Form.Item>
 
-        <Form.Item>
-          <Form.Label htmlFor="password">Password</Form.Label>
-          <Form.Control
+          <Form.Item
             type="password"
             placeholder="Your password"
             name="password"
             onChange={handleInputChange}
             value={userFormData.password}
             required
-          />
-          <Form.Control.Feedback type="invalid">
-            🚫 Password is required!
-          </Form.Control.Feedback>
-        </Form.Item>
-        <Button
-          disabled={
-            !(
-              userFormData.username &&
-              userFormData.email &&
-              userFormData.password
-            )
-          }
-          type="submit"
-          variant="success"
-        >
-          Submit
-        </Button>
-      </Form>
-      {error && (
-        <div className="my-3 p-3 bg-danger text-white">{error.message}</div>
-      )}
+            label="Password"
+            rules={[{ required: true, message: "🚫 Password is required!" }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+            <Button
+              htmlType="submit"
+              type="primary"
+              disabled={
+                !(
+                  userFormData.username &&
+                  userFormData.email &&
+                  userFormData.password
+                )
+              }
+            >
+              Submit
+            </Button>
+          </Form.Item>
+        </Form>
+      </Space>
     </>
   );
 };
