@@ -20,14 +20,16 @@ import Login from "./pages/Login";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 
+// Creates GraphQL API server endpoint
 const httpLink = createHttpLink({
   uri: "/graphql",
 });
 
+// Attaches the JWT token as an "authorization" header to every request
 const authLink = setContext((_, { headers }) => {
-  // get the authentication token from local storage if it exists
+  // Find authentication token from local storage
   const token = localStorage.getItem("id_token");
-  // return the headers to the context so httpLink can read them
+  // Return the headers to the context so httpLink can read them
   return {
     headers: {
       ...headers,

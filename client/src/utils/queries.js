@@ -1,31 +1,57 @@
 import { gql } from '@apollo/client';
 
-export const QUERY_PROFILES = gql`
-  query allProfiles {
-    profiles {
-      _id
-      name
-      skills
-    }
-  }
-`;
-
-export const QUERY_SINGLE_PROFILE = gql`
-  query singleProfile($profileId: ID!) {
-    profile(profileId: $profileId) {
-      _id
-      name
-      skills
-    }
-  }
-`;
-
 export const QUERY_ME = gql`
   query me {
     me {
       _id
-      name
-      skills
+      username
+      email
+      gameCount
+      savedGames {
+        _id
+        title
+        image
+        genre
+        release
+        players
+        platform
+        publisher
+        description
+      }
+      opinions {
+        _id
+        opinionText
+        opinionAuthor
+        createdAt
+      }
+    }
+  }
+`;
+
+export const QUERY_OPINIONS = gql`
+  query getOpinions {
+    opinions {
+      _id
+      opinionText
+      opinionAuthor
+      createdAt
+    }
+  }
+`;
+
+export const QUERY_SINGLE_OPINION = gql`
+  query getSingleOpinion($opinionId: ID!) {
+    opinion(opinionId: $opinionId) {
+      _id
+      opinionText
+      opinionAuthor
+      createdAt
+      comments {
+        _id
+        commentText
+        commentAuthor
+        createdAt
+      }
     }
   }
 `;
