@@ -8,7 +8,7 @@ import { Form, Button, Alert } from "antd";
 
 import Auth from "../utils/auth";
 
-const LoginForm = (props) => {
+const Login = (props) => {
   const [userFormData, setUserFormData] = useState({ email: "", password: "" });
   const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
@@ -105,4 +105,4 @@ const LoginForm = (props) => {
   );
 };
 
-export default LoginForm;
+export default Login;
