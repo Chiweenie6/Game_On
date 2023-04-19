@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useMutation } from "@apollo/client";
 
-import { ADD_SKILL } from '../../utils/mutations';
+import { ADD_SKILL } from "../../utils/mutations";
 
-import Auth from '../../utils/auth';
+import Auth from "../../utils/auth";
 
 const SkillForm = ({ profileId }) => {
-  const [skill, setSkill] = useState('');
+  const [skill, setSkill] = useState("");
 
   const [addSkill, { error }] = useMutation(ADD_SKILL);
 
@@ -19,7 +19,7 @@ const SkillForm = ({ profileId }) => {
         variables: { profileId, skill },
       });
 
-      setSkill('');
+      setSkill("");
     } catch (err) {
       console.error(err);
     }
@@ -56,7 +56,7 @@ const SkillForm = ({ profileId }) => {
         </form>
       ) : (
         <p>
-          You need to be logged in to endorse skills. Please{' '}
+          You need to be logged in to endorse skills. Please{" "}
           <Link to="/login">login</Link> or <Link to="/signup">signup.</Link>
         </p>
       )}

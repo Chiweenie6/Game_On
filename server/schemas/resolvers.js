@@ -132,21 +132,21 @@ const resolvers = {
           { new: true, runValidators: true }
         );
       }
-    //   Must be logged in in order to save game to profile
-    throw new AuthenticationError("🚫 Must Be Logged In To Save Game 🚫");
+      //   Must be logged in in order to save game to profile
+      throw new AuthenticationError("🚫 Must Be Logged In To Save Game 🚫");
     },
     // Delete Game from the User's profile
-    removeGame: async (parent, {gameId}, context) => {
-        if (context.user) {
-            return User.findOneAndUpdate(
-                {_id: context.user._id},
-                {$pull: {savedGames: {gameId: gameId}}},
-                {new: true}
-            );
-        }
-        //   Must be logged in in order to delete game from profile
-        throw new AuthenticationError("🚫 Must Be Logged In To Delete Game 🚫");
-    }
+    removeGame: async (parent, { gameId }, context) => {
+      if (context.user) {
+        return User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { savedGames: { gameId: gameId } } },
+          { new: true }
+        );
+      }
+      //   Must be logged in in order to delete game from profile
+      throw new AuthenticationError("🚫 Must Be Logged In To Delete Game 🚫");
+    },
   },
 };
 

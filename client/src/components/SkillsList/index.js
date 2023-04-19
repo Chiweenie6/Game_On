@@ -1,8 +1,8 @@
-import React from 'react';
-import { useMutation } from '@apollo/client';
+import React from "react";
+import { useMutation } from "@apollo/client";
 
-import { REMOVE_SKILL } from '../../utils/mutations';
-import { QUERY_ME } from '../../utils/queries';
+import { REMOVE_SKILL } from "../../utils/mutations";
+import { QUERY_ME } from "../../utils/queries";
 
 const SkillsList = ({ skills, isLoggedInUser = false }) => {
   const [removeSkill, { error }] = useMutation(REMOVE_SKILL, {
