@@ -21,8 +21,8 @@ import Profile from "./pages/Profile";
 
 
 import Home from "./pages/Home";
-import Head from "./components/Header";
-import Foot from "./components/Footer";
+import Head from "./components/Head";
+import Foot from "./components/Foot";
 
 // Creates GraphQL API server endpoint
 const httpLink = createHttpLink({
@@ -58,7 +58,7 @@ function App() {
         <Router>
           <Layout>
           <div className="flex-column justify-flex-start min-100-vh">
-            <Header />
+            <Foot />
             <div className="container">
               <Routes>
                 <Route path="/" element={<Home />} />
@@ -68,7 +68,7 @@ function App() {
                 <Route path="/profiles/:profileId" element={<Profile />} />
               </Routes>
             </div>
-            <Footer />
+            <Foot />
           </div>
           </Layout>
         </Router>

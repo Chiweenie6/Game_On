@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const Footer = () => {
+const Foot = () => {
   const location = useLocation();
   const navigate = useNavigate();
   return (
@@ -18,4 +18,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default Foot;
