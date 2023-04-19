@@ -1,14 +1,14 @@
-const { AuthenticationError } = require('apollo-server-express');
-const { User, Opinion } = require('../models');
-const { signToken } = require('../utils/auth');
+const { AuthenticationError } = require("apollo-server-express");
+const { User, Opinion } = require("../models");
+const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
     users: async () => {
-      return User.find().populate('opinions');
+      return User.find().populate("opinions");
     },
     user: async (parent, { username }) => {
-      return User.findOne({ username }).populate('opinions');
+      return User.findOne({ username }).populate("opinions");
     },
     opinions: async (parent, { username }) => {
       const params = username ? { username } : {};
@@ -21,7 +21,7 @@ const resolvers = {
     // Can find logged in User without specifically searching for their id by adding context
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate('opinions');
+        return User.findOne({ _id: context.user._id }).populate("opinions");
       }
       throw new AuthenticationError("🚫 Must be logged in 🚫");
     },
@@ -34,31 +34,47 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
+    // Login registered user
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
 
       if (!user) {
-        throw new AuthenticationError('No user with this email found!');
+        throw new AuthenticationError("🚫 User Email Not Found 🚫");
       }
+      const pWord = await user.isCorrectPassword(password);
 
-      const correctPw = await user.isCorrectPassword(password);
-
-      if (!correctPw) {
-        throw new AuthenticationError('Incorrect password!');
+      if (!pWord) {
+        throw new AuthenticationError("🚫 Wrong Password 🚫");
       }
-
       const token = signToken(user);
       return { token, user };
     },
-
-    // Add a third argument to the resolver to access data in our `context`
-    addSkill: async (parent, { userId, skill }, context) => {
-      // If context has a `user` property, that means the user executing this mutation has a valid JWT and is logged in
+    // Must be logged in to add opinion
+    addOpinion: async (parent, { opinionText }, context) => {
       if (context.user) {
-        return User.findOneAndUpdate(
-          { _id: userId },
+        const opinion = await Opinion.create({
+          opinionText,
+          opinionAuthor: context.user.username,
+        });
+
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { opinions: opinion._id } }
+        );
+
+        return opinion;
+      }
+      throw new AuthenticationError("🚫 Must Be Logged In To Add Opinion 🚫");
+    },
+    // Must be logged in to add comment
+    addComment: async (parent, { opinionId, commentText }, context) => {
+      if (context.user) {
+        return Opinion.findOneAndUpdate(
+          { _id: opinionId },
           {
-            $addToSet: { skills: skill },
+            $addToSet: {
+              comments: { commentText, commentAuthor: context.user.username },
+            },
           },
           {
             new: true,
@@ -66,27 +82,71 @@ const resolvers = {
           }
         );
       }
-      // If user attempts to execute this mutation and isn't logged in, throw an error
-      throw new AuthenticationError('You need to be logged in!');
+      throw new AuthenticationError("🚫 Must Be Logged In To Add Comment 🚫");
     },
-    // Set up mutation so a logged in user can only remove their user and no one else's
-    removeUser: async (parent, args, context) => {
+    // Must be logged in to delete opinion
+    removeOpinion: async (parent, { opinionId }, context) => {
       if (context.user) {
-        return User.findOneAndDelete({ _id: context.user._id });
-      }
-      throw new AuthenticationError('You need to be logged in!');
-    },
-    // Make it so a logged in user can only remove a skill from their own user
-    removeSkill: async (parent, { skill }, context) => {
-      if (context.user) {
-        return User.findOneAndUpdate(
+        const opinion = await Opinion.findOneAndDelete({
+          _id: opinionId,
+          opinionAuthor: context.user.username,
+        });
+
+        await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $pull: { skills: skill } },
+          { $pull: { opinions: opinion._id } }
+        );
+
+        return opinion;
+      }
+      throw new AuthenticationError(
+        "🚫 Must Be Logged In To Delete Opinion 🚫"
+      );
+    },
+    // Must be logged in to delete opinion
+    removeComment: async (parent, { opinionId, commentId }, context) => {
+      if (context.user) {
+        return Opinion.findOneAndUpdate(
+          { _id: opinionId },
+          {
+            $pull: {
+              comments: {
+                _id: commentId,
+                commentAuthor: context.user.username,
+              },
+            },
+          },
           { new: true }
         );
       }
-      throw new AuthenticationError('You need to be logged in!');
+      throw new AuthenticationError(
+        "🚫 Must Be Logged In To Delete Comment 🚫"
+      );
     },
+    // Save Game to User profile
+    saveGame: async (parent, { input }, context) => {
+      if (context.user) {
+        return User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { savedGames: input } },
+          { new: true, runValidators: true }
+        );
+      }
+    //   Must be logged in in order to save game to profile
+    throw new AuthenticationError("🚫 Must Be Logged In To Save Game 🚫");
+    },
+    // Delete Game from the User's profile
+    removeGame: async (parent, {gameId}, context) => {
+        if (context.user) {
+            return User.findOneAndUpdate(
+                {_id: context.user._id},
+                {$pull: {savedGames: {gameId: gameId}}},
+                {new: true}
+            );
+        }
+        //   Must be logged in in order to delete game from profile
+        throw new AuthenticationError("🚫 Must Be Logged In To Delete Game 🚫");
+    }
   },
 };
 
