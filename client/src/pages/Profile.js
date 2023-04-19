@@ -1,65 +1,146 @@
 import React from "react";
-
-import { Navigate, useParams } from "react-router-dom";
-import { useQuery } from "@apollo/client";
-
-import SkillsList from "../components/SkillsList";
-import SkillForm from "../components/SkillForm";
-
-import { QUERY_SINGLE_PROFILE, QUERY_ME } from "../utils/queries";
+import { useParams } from "react-router-dom";
+import { useQuery, useMutation } from "@apollo/client";
+import { QUERY_ME } from "../utils/queries";
+import { REMOVE_GAME } from "../utils/mutations";
 
 import Auth from "../utils/auth";
+import { removeGameId } from "../utils/localStorage";
+
+import OpinionForm from "../components/OpinionForm";
+import OpinionList from "../components/OpinionList";
+
+// import Ant Design
+import { Col, Row, Layout, Button, Card } from "antd";
 
 const Profile = () => {
-  const { profileId } = useParams();
+  const { username: userParam } = useParams();
+  // Use the Query "GET_ME"
+  const { loading, data } = useQuery(QUERY_ME);
+  // Checks if data is returning from "GET_ME" and saves to "userData"
+  let userData = data?.me || {};
 
-  // If there is no `profileId` in the URL as a parameter, execute the `QUERY_ME` query instead for the logged in user's information
-  const { loading, data } = useQuery(
-    profileId ? QUERY_SINGLE_PROFILE : QUERY_ME,
-    {
-      variables: { profileId: profileId },
+  const [removeGame] = useMutation(REMOVE_GAME);
+
+  // create function that accepts the game's mongo _id value as param and deletes the game from the database
+  const handleDeleteGame = async (gameId) => {
+    const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+    if (!token) {
+      return false;
     }
-  );
 
-  // Check if data is returning from the `QUERY_ME` query, then the `QUERY_SINGLE_PROFILE` query
-  const profile = data?.me || data?.profile || {};
+    try {
+      const { newData } = await removeGame({
+        variables: {
+          gameId: gameId,
+        },
+      });
 
-  // Use React Router's `<Redirect />` component to redirect to personal profile page if username is yours
-  if (Auth.loggedIn() && Auth.getProfile().data._id === profileId) {
-    return <Navigate to="/me" />;
-  }
+      if (!newData.ok) {
+        throw new Error("🚫 Something went wrong! 🚫");
+      }
+
+      // Update user's savedGames after removing game.
+      userData = newData;
+
+      // upon success, remove game's id from localStorage
+      removeGameId(gameId);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div>🔃 Loading 🔃</div>;
   }
-
-  if (!profile?.name) {
-    return (
-      <h4>
-        You need to be logged in to see your profile page. Use the navigation
-        links above to sign up or log in!
-      </h4>
-    );
+  if (!userData?.username) {
+    return <h2>🚫 Must Be Logged In To View Profile🚫</h2>;
   }
 
   return (
-    <div>
-      <h2 className="card-header">
-        {profileId ? `${profile.name}'s` : "Your"} friends have endorsed these
-        skills...
-      </h2>
+    <>
+      <Layout
+        fluid
+        className="text-light bg-dark p-5"
+        class="text-center p-5 text-success"
+      >
+        <Layout class="">
+          <h1>🕹️ Saved Games 🎮</h1>
+        </Layout>
+      </Layout>
+      <Layout>
+        <h2 class="text-center">
+          {userData.savedGames.length
+            ? `${userData.savedGames.length} saved ${
+                userData.savedGames.length === 1 ? "game" : "games"
+              }:`
+            : "No saved games!"}
+        </h2>
+        <Layout>
+          <Row>
+            <Col>
+              {userData.savedGames.map((game) => {
+                return (
+                  <Card key={game.gameId} border="dark">
+                    {game.image ? (
+                      <Card.Img
+                        src={game.image}
+                        alt={`The cover for ${game.title}`}
+                        variant="top"
+                      />
+                    ) : null}
+                    <Card.Body>
+                      <Card.Title>{game.title}</Card.Title>
+                      <p className="small">Genre: {game.genre}</p>
+                      <p className="small">Release: {game.release}</p>
+                      <p className="small">Players: {game.players}</p>
+                      <p className="small">Platform: {game.platform}</p>
+                      <p className="small">Publisher: {game.publisher}</p>
+                      <Card.Text>{game.description}</Card.Text>
+                      
+                      <br></br>
+                      <br></br>
+                      <br></br>
+                      <Button
+                        className="btn-block btn-danger"
+                        onClick={() => handleDeleteGame(game.gameId)}
+                      >
+                        🔥 Delete this Game!
+                      </Button>
+                    </Card.Body>
+                  </Card>
+                );
+              })}
+            </Col>
+          </Row>
+        </Layout>
+        <Layout>
+          <Layout className="flex-row justify-center mb-3">
+            <h2 className="col-12 col-md-10 bg-dark text-light p-3 mb-5">
+              Viewing {userParam ? `${userData.username}'s` : "your"} profile.
+            </h2>
 
-      {profile.skills?.length > 0 && (
-        <SkillsList
-          skills={profile.skills}
-          isLoggedInUser={!profileId && true}
-        />
-      )}
-
-      <div className="my-4 p-4" style={{ border: "1px dotted #1a1a1a" }}>
-        <SkillForm profileId={profile._id} />
-      </div>
-    </div>
+            <Layout className="col-12 col-md-10 mb-5">
+              <OpinionList
+                opinions={userData.opinions}
+                title={`${userData.username}'s opinions...`}
+                showTitle={false}
+                showUsername={false}
+              />
+            </Layout>
+            {!userParam && (
+              <Layout
+                className="col-12 col-md-10 mb-3 p-3"
+                style={{ border: "1px dotted #1a1a1a" }}
+              >
+                <OpinionForm />
+              </Layout>
+            )}
+          </Layout>
+        </Layout>
+      </Layout>
+    </>
   );
 };
 

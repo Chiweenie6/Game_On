@@ -11,18 +11,18 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // import Ant Design
 import "antd/dist/reset.css";
 import "./App.css";
-import { ConfigProvider, theme } from "antd";
+import { ConfigProvider, theme, Header, Footer, Layout } from "antd";
 
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Profile from "./pages/Profile";
 
 
 
 
 import Home from "./pages/Home";
-import Profile from "./pages/Profile";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+import Head from "./components/Header";
+import Foot from "./components/Footer";
 
 // Creates GraphQL API server endpoint
 const httpLink = createHttpLink({
@@ -56,6 +56,7 @@ function App() {
     >
       <ApolloProvider client={client}>
         <Router>
+          <Layout>
           <div className="flex-column justify-flex-start min-100-vh">
             <Header />
             <div className="container">
@@ -69,6 +70,7 @@ function App() {
             </div>
             <Footer />
           </div>
+          </Layout>
         </Router>
       </ApolloProvider>
     </ConfigProvider>
