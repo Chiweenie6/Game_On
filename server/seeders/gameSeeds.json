@@ -1,0 +1,42 @@
+[
+  {
+    "title": "Destiny 2",
+    "image": "/images/Destiny_2.jpg",
+    "genre": "Adventure, Shooter, Action",
+    "release": "12/8/2020",
+    "players": "Single Player, Online and Local Multiplayer",
+    "platform": "PS5, PS4, XBox",
+    "publisher": "Bungie",
+    "description": "You are a Guardian, defender of the Last City of humanity in a solar system under siege by infamous villains. Look to the stars and stand against the darkness. Your legend begins now."
+  },
+  {
+    "title": "STAR WARS Jedi: Survivor",
+    "image": "/images/Star_Wars_Jedi-Survivor.jpeg",
+    "genre": "Action",
+    "release": "4/27/2023",
+    "players": "Single Player",
+    "platform": "PS5, PS4, XBox",
+    "publisher": "Electric Arts Inc",
+    "description": "The story of Cal Kestis continues in STAR WARS Jedi: Survivor™, a galaxy-spanning third-person action-adventure game from Respawn Entertainment and Lucasfilm Games. This narratively driven single-player adventure continues five years after the events of STAR WARS Jedi: Fallen Order™ and follows Cal’s increasingly desperate fight to protect the galaxy from descending into darkness."
+  },
+  {
+    "title": "Hogwarts Legacy",
+    "image": "/images/Hogwarts_Legacy.webp",
+    "genre": "Unique",
+    "release": "2/9/2023",
+    "players": "Single Player",
+    "platform": "PS5, PS4, XBox",
+    "publisher": "Warner Bros. Interactive",
+    "description": "Hogwarts Legacy is an open-world action RPG set in the world first introduced in the Harry Potter books. Embark on a journey through familiar and new locations as you explore and discover magical beasts, customize your character and craft potions, master spell casting, upgrade talents and become the wizard you want to be. Experience Hogwarts in the 1800s. Your character is a student who holds the key to an ancient secret that threatens to tear the wizarding world apart. Make allies, battle Dark wizards, and ultimately decide the fate of the wizarding world. Your legacy is what you make of it. Live the Unwritten."
+  },
+  {
+    "title": "Assassin's Creed: Valhalla",
+    "image": "/images/Assassin's_Creed_Valhalla.jpg",
+    "genre": "RPG",
+    "release": "11/11/2020",
+    "players": "Single Player",
+    "platform": "PS5, PS4, XBox",
+    "publisher": "Ubisoft Entertainment",
+    "description": "Become Eivor, a legendary Viking warrior raised on tales of battle and glory. Explore England's Dark Ages as you raid your enemies, grow your settlement, and build your political power in the quest to earn a place among the gods in Valhalla."
+  }
+]
