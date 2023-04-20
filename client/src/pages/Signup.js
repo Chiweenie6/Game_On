@@ -81,7 +81,7 @@ const Signup = () => {
             required
           />
           <Form.Control.Feedback type="invalid">
-            Username is required!
+            🚫 Username is required!
           </Form.Control.Feedback>
         </Form.Group>
 
@@ -96,7 +96,7 @@ const Signup = () => {
             required
           />
           <Form.Control.Feedback type="invalid">
-            Email is required!
+            🚫 Email is required!
           </Form.Control.Feedback>
         </Form.Group>
 
@@ -111,7 +111,7 @@ const Signup = () => {
             required
           />
           <Form.Control.Feedback type="invalid">
-            Password is required!
+            🚫 Password is required!
           </Form.Control.Feedback>
         </Form.Group>
         <Button
@@ -124,6 +124,7 @@ const Signup = () => {
           }
           type="submit"
           variant="success"
+          color="red"
         >
           Submit
         </Button>
