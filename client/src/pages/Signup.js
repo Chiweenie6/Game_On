@@ -1,14 +1,13 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 
 import { useMutation } from "@apollo/client";
 import { ADD_USER } from "../utils/mutations";
 
 // import Ant Design
-import { Form, Button, Alert, Input, Space } from "antd";
+import { Form, Button, Alert, Input } from "antd";
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
 
 import Auth from "../utils/auth";
-import FormItem from "antd/es/form/FormItem";
 
 const Signup = () => {
   const [userFormData, setUserFormData] = useState({
@@ -66,7 +65,8 @@ const Signup = () => {
         noValidate
         validated={validated}
         onSubmit={handleFormSubmit}
-        name="basic"
+        name="normal_login"
+        className="login-form"
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 16 }}
         style={{ maxWidth: 600 }}
@@ -87,40 +87,47 @@ const Signup = () => {
         <Form.Item
           type="text"
           name="username"
-          onChange={handleInputChange}
-          value={userFormData.username}
+          required
           label="Username"
           rules={[{ required: true, message: "🚫 Username is required!" }]}
         >
-          <Input placeholder="Your username" />
+          <Input 
+          prefix={<UserOutlined className="site-form-item-icon" />}
+          placeholder="Your username"
+          value={userFormData.username}
+          onChange={handleInputChange} />
         </Form.Item>
 
         <Form.Item
           type="email"
           name="email"
-          onChange={handleInputChange}
-          value={userFormData.email}
           required
           label="Email"
           rules={[{ required: true, message: "🚫 Email is required!" }]}
         >
-          <Input placeholder="Your email address" />
+          <Input 
+          prefix={<UserOutlined className="site-form-item-icon" />}
+          placeholder="Your email address"
+          value={userFormData.email}
+          onChange={handleInputChange} />
         </Form.Item>
 
         <Form.Item
           type="password"
           name="password"
-          onChange={handleInputChange}
-          value={userFormData.password}
           required
           label="Password"
           rules={[{ required: true, message: "🚫 Password is required!" }]}
         >
-          <Input.Password placeholder="Your password" />
+          <Input
+          prefix={<LockOutlined className="site-form-item-icon" />}
+          placeholder="Your password"
+          value={userFormData.password}
+          onChange={handleInputChange} />
         </Form.Item>
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button htmlType="submit" type="primary">
+          <Button htmlType="submit" type="primary" className="login-form-button">
             Submit
           </Button>
         </Form.Item>
