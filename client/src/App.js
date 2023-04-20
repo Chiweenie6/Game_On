@@ -8,10 +8,6 @@ import {
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-// import Ant Design
-import "antd/dist/reset.css";
-import "./App.css";
-import { ConfigProvider, theme, Header, Footer, Layout } from "antd";
 
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -20,9 +16,10 @@ import Profile from "./pages/Profile";
 
 
 
+
 import Home from "./pages/Home";
-import Head from "./components/Head";
-import Foot from "./components/Foot";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 // Creates GraphQL API server endpoint
 const httpLink = createHttpLink({
@@ -49,16 +46,10 @@ const client = new ApolloClient({
 
 function App() {
   return (
-    <ConfigProvider
-      theme={{
-        algorithm: theme.lightAlgorithm,
-      }}
-    >
       <ApolloProvider client={client}>
         <Router>
-          <Layout>
           <div className="flex-column justify-flex-start min-100-vh">
-            <Head />
+            <Header />
             <div className="container">
               <Routes>
                 <Route path="/" element={<Home />} />
@@ -68,12 +59,10 @@ function App() {
                 <Route path="/profiles/:profileId" element={<Profile />} />
               </Routes>
             </div>
-            <Foot />
+            <Footer />
           </div>
-          </Layout>
         </Router>
       </ApolloProvider>
-    </ConfigProvider>
   );
 }
 

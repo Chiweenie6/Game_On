@@ -3,10 +3,13 @@ import { Link } from "react-router-dom";
 
 import Auth from "../../utils/auth";
 
-// import Ant Design
-import {Layout, Button} from "antd";
-
-const {Header, Content} = Layout;
+import {
+  Container,
+  Col,
+  Card,
+  Button,
+  Row,
+} from "react-bootstrap";
 
 const Head = () => {
   const logout = (event) => {
@@ -14,8 +17,8 @@ const Head = () => {
     Auth.logout();
   };
   return (
-    <Header className="bg-info text-dark mb-4 py-3 display-flex align-center">
-      <Layout className="container flex-column justify-space-between-lg justify-center align-center text-center">
+    <Container className="bg-info text-dark mb-4 py-3 display-flex align-center">
+      <div className="container flex-column justify-space-between-lg justify-center align-center text-center">
         <Link className="text-dark" to="/">
           <h1 className="m-0" style={{ fontSize: "3rem" }}>
             Game On
@@ -24,7 +27,7 @@ const Head = () => {
         <p className="m-0" style={{ fontSize: "1.75rem", fontWeight: "700" }}>
           Let's Play A Game.
         </p>
-        <Content>
+        <div>
           {Auth.loggedIn() ? (
             <>
               <Link className="btn btn-lg btn-primary m-2" to="/me">
@@ -44,9 +47,9 @@ const Head = () => {
               </Link>
             </>
           )}
-        </Content>
-      </Layout>
-    </Header>
+        </div>
+      </div>
+    </Container>
   );
 };
 

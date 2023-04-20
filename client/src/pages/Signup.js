@@ -3,9 +3,8 @@ import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { ADD_USER } from "../utils/mutations";
 
-// import Ant Design
-import { Form, Button, Alert, Input } from "antd";
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
+// import React Bootstrap
+import { Form, Button, Alert } from "react-bootstrap";
 
 import Auth from "../utils/auth";
 
@@ -60,20 +59,7 @@ const Signup = () => {
   return (
     <>
       {/* This is needed for the validation functionality above */}
-
-      <Form
-        noValidate
-        validated={validated}
-        onSubmit={handleFormSubmit}
-        name="normal_login"
-        className="login-form"
-        labelCol={{ span: 8 }}
-        wrapperCol={{ span: 16 }}
-        style={{ maxWidth: 600 }}
-        initialValues={{ remember: true }}
-        onFinish={handleFormSubmit}
-        autoComplete="off"
-      >
+      <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
         {/* show alert if server response is bad */}
         <Alert
           dismissible
@@ -84,54 +70,67 @@ const Signup = () => {
           🚫 Something went wrong with your signup! 🚫
         </Alert>
 
-        <Form.Item
-          type="text"
-          name="username"
-          required
-          label="Username"
-          rules={[{ required: true, message: "🚫 Username is required!" }]}
-        >
-          <Input 
-          prefix={<UserOutlined className="site-form-item-icon" />}
-          placeholder="Your username"
-          value={userFormData.username}
-          onChange={handleInputChange} />
-        </Form.Item>
+        <Form.Group>
+          <Form.Label htmlFor="username">Username</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Your username"
+            name="username"
+            onChange={handleInputChange}
+            value={userFormData.username}
+            required
+          />
+          <Form.Control.Feedback type="invalid">
+            Username is required!
+          </Form.Control.Feedback>
+        </Form.Group>
 
-        <Form.Item
-          type="email"
-          name="email"
-          required
-          label="Email"
-          rules={[{ required: true, message: "🚫 Email is required!" }]}
-        >
-          <Input 
-          prefix={<UserOutlined className="site-form-item-icon" />}
-          placeholder="Your email address"
-          value={userFormData.email}
-          onChange={handleInputChange} />
-        </Form.Item>
+        <Form.Group>
+          <Form.Label htmlFor="email">Email</Form.Label>
+          <Form.Control
+            type="email"
+            placeholder="Your email address"
+            name="email"
+            onChange={handleInputChange}
+            value={userFormData.email}
+            required
+          />
+          <Form.Control.Feedback type="invalid">
+            Email is required!
+          </Form.Control.Feedback>
+        </Form.Group>
 
-        <Form.Item
-          type="password"
-          name="password"
-          required
-          label="Password"
-          rules={[{ required: true, message: "🚫 Password is required!" }]}
+        <Form.Group>
+          <Form.Label htmlFor="password">Password</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="Your password"
+            name="password"
+            onChange={handleInputChange}
+            value={userFormData.password}
+            required
+          />
+          <Form.Control.Feedback type="invalid">
+            Password is required!
+          </Form.Control.Feedback>
+        </Form.Group>
+        <Button
+          disabled={
+            !(
+              userFormData.username &&
+              userFormData.email &&
+              userFormData.password
+            )
+          }
+          type="submit"
+          variant="success"
         >
-          <Input
-          prefix={<LockOutlined className="site-form-item-icon" />}
-          placeholder="Your password"
-          value={userFormData.password}
-          onChange={handleInputChange} />
-        </Form.Item>
-
-        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button htmlType="submit" type="primary" className="login-form-button">
-            Submit
-          </Button>
-        </Form.Item>
+          Submit
+        </Button>
       </Form>
+      {error && (
+        <div className="my-3 p-3 bg-danger text-white">{error.message}</div>
+      )}
     </>
   );
 };

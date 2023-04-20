@@ -10,8 +10,15 @@ import { removeGameId } from "../utils/localStorage";
 import OpinionForm from "../components/OpinionForm";
 import OpinionList from "../components/OpinionList";
 
-// import Ant Design
-import { Col, Row, Layout, Button, Card } from "antd";
+import {
+  Container,
+  Col,
+  Card,
+  Button,
+  Row,
+} from "react-bootstrap";
+
+
 
 const Profile = () => {
   const { username: userParam } = useParams();
@@ -60,16 +67,16 @@ const Profile = () => {
 
   return (
     <>
-      <Layout
+      <Container
         fluid
         className="text-light bg-dark p-5"
         class="text-center p-5 text-success"
       >
-        <Layout class="">
+        <div class="">
           <h1>🕹️ Saved Games 🎮</h1>
-        </Layout>
-      </Layout>
-      <Layout>
+        </div>
+      </Container>
+      <Container>
         <h2 class="text-center">
           {userData.savedGames.length
             ? `${userData.savedGames.length} saved ${
@@ -77,7 +84,7 @@ const Profile = () => {
               }:`
             : "No saved games!"}
         </h2>
-        <Layout>
+        <Container>
           <Row>
             <Col>
               {userData.savedGames.map((game) => {
@@ -114,32 +121,32 @@ const Profile = () => {
               })}
             </Col>
           </Row>
-        </Layout>
-        <Layout>
-          <Layout className="flex-row justify-center mb-3">
+        </Container>
+        <Container>
+          <div className="flex-row justify-center mb-3">
             <h2 className="col-12 col-md-10 bg-dark text-light p-3 mb-5">
               Viewing {userParam ? `${userData.username}'s` : "your"} profile.
             </h2>
 
-            <Layout className="col-12 col-md-10 mb-5">
+            <div className="col-12 col-md-10 mb-5">
               <OpinionList
                 opinions={userData.opinions}
                 title={`${userData.username}'s opinions...`}
                 showTitle={false}
                 showUsername={false}
               />
-            </Layout>
+            </div>
             {!userParam && (
-              <Layout
+              <div
                 className="col-12 col-md-10 mb-3 p-3"
                 style={{ border: "1px dotted #1a1a1a" }}
               >
                 <OpinionForm />
-              </Layout>
+              </div>
             )}
-          </Layout>
-        </Layout>
-      </Layout>
+          </div>
+        </Container>
+      </Container>
     </>
   );
 };

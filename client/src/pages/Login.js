@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../utils/mutations";
 
-// import Ant Design
-import { Form, Button, Alert } from "antd";
+import { Form, Button, Alert } from "react-bootstrap";
 
 import Auth from "../utils/auth";
 
@@ -61,9 +60,9 @@ const Login = (props) => {
         >
           🚫 Something went wrong with your login credentials! 🚫
         </Alert>
-        <Form.Item>
+        <Form.Group>
           <Form.Label htmlFor="email">Email</Form.Label>
-          <Form.Item
+          <Form.Control
             type="text"
             placeholder="Your email"
             name="email"
@@ -71,14 +70,14 @@ const Login = (props) => {
             value={userFormData.email}
             required
           />
-          <Form type="invalid">
+          <Form.Control.Feedback type="invalid">
             🚫 Email is required!
-          </Form>
-        </Form.Item>
+          </Form.Control.Feedback>
+        </Form.Group>
 
-        <Form.Item>
+        <Form.Group>
           <Form.Label htmlFor="password">Password</Form.Label>
-          <Form.Item
+          <Form.Control
             type="password"
             placeholder="Your password"
             name="password"
@@ -86,10 +85,10 @@ const Login = (props) => {
             value={userFormData.password}
             required
           />
-          <Form.Item type="invalid">
+          <Form.Control.Feedback type="invalid">
           🚫 Password is required!
-          </Form.Item>
-        </Form.Item>
+          </Form.Control.Feedback>
+        </Form.Group>
         <Button
           disabled={!(userFormData.email && userFormData.password)}
           type="submit"
