@@ -11,6 +11,9 @@ import {
   Row,
 } from "react-bootstrap";
 
+import {GameList} from "../components/GameList"
+import { QUERY_GAMES} from "../utils/queries"
+
 import Auth from "../utils/auth";
 import { saveGameIds, getSavedGameIds } from "../utils/localStorage";
 
@@ -21,6 +24,8 @@ import { useMutation } from "@apollo/client";
 
 
 const Home = () => {
+  const { loading, data } = useQuery(QUERY_GAMES);
+  const games = data?.games || [];
 
   return (
     <Container>
@@ -29,6 +34,19 @@ const Home = () => {
           <h1>Let's Game</h1>
         </Col>
       </Row>
+
+      <div className="flex-row justify-center">
+        <div className="col-12 col-md-10 my-3">
+          {loading ? (
+            <div>🔃 Loading 🔃</div>
+          ) : (
+            <GameList
+              games={games}
+              title="Here's the current list of games"
+            />
+          )}
+        </div>
+      </div>
     </Container>
   );
 };

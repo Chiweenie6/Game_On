@@ -28,6 +28,22 @@ export const QUERY_ME = gql`
   }
 `;
 
+export const QUERY_GAMES = gql`
+query getGames {
+  games {
+    _id
+    title
+    image
+    genre
+    release
+    players
+    platform
+    publisher
+    description
+  }
+}
+`;
+
 export const QUERY_OPINIONS = gql`
   query getOpinions {
     opinions {
