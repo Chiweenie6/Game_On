@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Navbar, Nav, Container, Modal, Tab } from "react-bootstrap";
-import SignUp from "../pages/Signup";
-import Login from "../pages/Login";
+import SignUp from "../../pages/Signup";
+import Login from "../../pages/Login";
 
-import Auth from "../utils/auth";
+import Auth from "../../utils/auth";
 
 const AppNavbar = () => {
   // set modal display state

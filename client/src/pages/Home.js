@@ -11,8 +11,8 @@ import {
   Row,
 } from "react-bootstrap";
 
-import {GameList} from "../components/GameList"
-import { QUERY_GAMES} from "../utils/queries"
+import {GameList} from "../components/GameList";
+import { QUERY_GAMES} from "../utils/queries";
 
 import Auth from "../utils/auth";
 import { saveGameIds, getSavedGameIds } from "../utils/localStorage";
@@ -42,7 +42,7 @@ const Home = () => {
           ) : (
             <GameList
               games={games}
-              title="Here's the current list of games"
+              title="Current list of games"
             />
           )}
         </div>

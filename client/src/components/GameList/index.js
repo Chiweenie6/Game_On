@@ -1,23 +1,25 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import {Card} from "react-bootstrap";
+import { Card } from "react-bootstrap";
 
-const GameList = ({ games, title }) => {
+const GameList = ({ games }) => {
   if (!games.length) {
     return <h4>No Games At The Moment</h4>;
   }
 
+  return (
+    <div>
+      <h2 className="text-info">title</h2>
 
-return (
-  <div>
-    <h2 className="text-info">{title}</h2>
-
-    <div className="flex-row justify-space-between my-4">
-        {games && games.map((game) => (
+      <div className="flex-row justify-space-between my-4">
+        {games &&
+          games.map((game) => (
             <div key={game._id} className=" col-12">
-            <Card>
-                <h2 className="card-header bg-dark text-light p-2 m-0">{game.title}</h2>
+              <Card>
+                <h2 className="card-header bg-dark text-light p-2 m-0">
+                  {game.title}
+                </h2>
                 <br></br>
                 <h4>{game.image}</h4>
                 <br></br>
@@ -33,19 +35,19 @@ return (
                 <br></br>
                 <p>{game.description}</p>
                 <br></br>
-            </Card>
+              </Card>
 
-            <Link
-            className="btn btn-block btn-squared btn-light text-dark"
-            to={`/games/${game._id}`}
-            >
+              <Link
+                className="btn btn-block btn-squared btn-light text-dark"
+                to={`/games/${game._id}`}
+              >
                 View Game
-            </Link>
+              </Link>
             </div>
-        ))}
+          ))}
+      </div>
     </div>
-  </div>
-);
-    };
+  );
+};
 
 export default GameList;
