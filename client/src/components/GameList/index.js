@@ -1,7 +1,7 @@
-import React from "react";
-import { Link } from "react-router-dom";
-
 import { Card } from "react-bootstrap";
+
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const GameList = ({ games }) => {
   if (!games.length) {
@@ -21,7 +21,7 @@ const GameList = ({ games }) => {
                   {game.title}
                 </h2>
                 <br></br>
-                <h4>{game.image}</h4>
+                <img src="game.image" alt="{game.title}.value"></img>
                 <br></br>
                 <h4>{game.genre}</h4>
                 <br></br>
